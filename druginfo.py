@@ -3,7 +3,7 @@ import missingno as msno
 import matplotlib.pyplot as plt
 import numpy as np
 import re
-from datasketch import MinHash, MinHashLSHForest
+from datasketch import MinHash, MinHashLSH, MinHashLSHForest
 
 
 df = pd.read_csv("C:/Users/samee/Downloads/drugLib_raw/drugLibTest_raw.tsv", delimiter='\t')
@@ -23,12 +23,13 @@ df = pd.concat([df, df2], ignore_index=True)
 #fig = plt.figure()
 #fig.savefig(a)
 
-df = df.dropna()
-#print(df.dropna())
+# ultram-er
+# ultram-xr
 
 df = df.dropna().reset_index()
 df.drop(['index'], axis=1,inplace=True)
-#print(df)
+#df = df.reset_index()
+print(df)
 
 def preprocess(text):
     #text = re.sub('-',' ',text)
@@ -69,31 +70,43 @@ print(m[14].jaccard(m[22]))
 '''
 lsh = MinHashLSH(threshold=0.95, num_perm=256)
 for minh in range(0, len(m)):
+    #print(minh)
+    if df.at[minh,'urlDrugName'] not in lsh:
+        lsh.insert(df.at[minh, 'urlDrugName'],m[minh])
 
-    lsh.insert(df.at[minh, 'urlDrugName'],m[minh])
-result = lsh.query(m[1])
+result = lsh.query(m[14])
 print(result)
+print(len(lsh))
 '''
+
 sub = '-'
 print(len([s for s in df['urlDrugName'] if sub in s]))
-#hyphen = [s for s in df['urlDrugName'] if sub in s]
-#print(df.query('-' in 'urlDrugName').index)
-#print(hyphen)
-#print(df.xs('urlDrugName','index'))
-#print(df[['urlDrugName']])
-#hyphen = df[['urlDrugName']]
+'''
+hyphen = [s for s in df['urlDrugName'] if sub in s]
+print(df.query('-' in 'urlDrugName').index)
+print(hyphen)
+print(df.xs('urlDrugName','index'))
+print(df[['urlDrugName']])
+hyphen = df[['urlDrugName']]
+'''
 
 for i in range(0, len(df.index)):
     for j in range(i, len(df.index)):
-        if m[i].jaccard(m[j]) >= 0.5 and  m[i].jaccard(m[j]) < 1.0:
+        if m[i].jaccard(m[j]) >= 0.25 and df.at[i, 'urlDrugName'] != df.at[j, 'urlDrugName']:
             if len(df.at[i, 'urlDrugName']) > len(df.at[j, 'urlDrugName']):
                 if df.at[j, 'urlDrugName'] in df.at[i, 'urlDrugName']:
-                    print("changed name i " + df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
+                    #print("changed name i " + df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
+                    df.at[i, 'urlDrugName'] = df.at[j, 'urlDrugName']
             elif len(df.at[j, 'urlDrugName']) > len(df.at[i, 'urlDrugName']):
                 if df.at[i, 'urlDrugName'] in df.at[j, 'urlDrugName']:
-                    print("changed name j " + df.at[j, 'urlDrugName'], df.at[i, 'urlDrugName'])
-            else:
-                print(df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
+                    #print("changed name j " + df.at[j, 'urlDrugName'], df.at[i, 'urlDrugName'])
+                    df.at[j, 'urlDrugName'] = df.at[i, 'urlDrugName']
+            #else:
+             #   print(df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
+
+print(df)
+print(len([s for s in df['urlDrugName'] if sub in s]))
+print([s for s in df['urlDrugName'] if sub in s])
 
 '''
 hyphen = df[['urlDrugName']]
@@ -111,4 +124,3 @@ for s in df['urlDrugName']:
                 print("yay")
 
 print('done') '''
-
