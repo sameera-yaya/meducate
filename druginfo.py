@@ -66,10 +66,49 @@ print(len(df.at[22, 'urlDrugName']))
 print(m[14].jaccard(m[22]))
 #print(actual_jaccard)
 
-
+'''
 lsh = MinHashLSH(threshold=0.95, num_perm=256)
 for minh in range(0, len(m)):
 
     lsh.insert(df.at[minh, 'urlDrugName'],m[minh])
 result = lsh.query(m[1])
 print(result)
+'''
+sub = '-'
+print(len([s for s in df['urlDrugName'] if sub in s]))
+#hyphen = [s for s in df['urlDrugName'] if sub in s]
+#print(df.query('-' in 'urlDrugName').index)
+#print(hyphen)
+#print(df.xs('urlDrugName','index'))
+#print(df[['urlDrugName']])
+#hyphen = df[['urlDrugName']]
+
+for i in range(0, len(df.index)):
+    for j in range(i, len(df.index)):
+        if m[i].jaccard(m[j]) >= 0.5 and  m[i].jaccard(m[j]) < 1.0:
+            if len(df.at[i, 'urlDrugName']) > len(df.at[j, 'urlDrugName']):
+                if df.at[j, 'urlDrugName'] in df.at[i, 'urlDrugName']:
+                    print("changed name i " + df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
+            elif len(df.at[j, 'urlDrugName']) > len(df.at[i, 'urlDrugName']):
+                if df.at[i, 'urlDrugName'] in df.at[j, 'urlDrugName']:
+                    print("changed name j " + df.at[j, 'urlDrugName'], df.at[i, 'urlDrugName'])
+            else:
+                print(df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
+
+'''
+hyphen = df[['urlDrugName']]
+for s in hyphen.index:
+        if sub in df.at[s, 'urlDrugName']:
+            hyphen.drop([s])
+
+print(hyphen)'''
+'''print(m[df.index[df['urlDrugName'] == 'xanax'][0]].jaccard(m[df.index[df['urlDrugName']][0]]))
+
+for s in df['urlDrugName']:
+    if sub in s:
+        for t in df['urlDrugName']:
+            if m[df.index[df['urlDrugName'] == s]].jaccard(m[df.index[df['urlDrugName'] == t]]) in range(0.9,1.0):
+                print("yay")
+
+print('done') '''
+
