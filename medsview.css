@@ -1,0 +1,82 @@
+body {
+	background: #fff;
+	color: #666;
+	font: 90%/180% Arial, Helvetica, sans-serif;
+	width: 800px;
+	max-width: 96%;
+    margin: 0 auto;
+    text-align: center;
+    align-content: center;
+    vertical-align: middle;
+    padding: 10%;
+}
+
+h3 {
+    font-size: 50px;
+	font: 1.7em;
+	line-height: 110%;
+    color: tomato;
+    align-content: center;
+    outline-color: #666;
+    -webkit-text-stroke: 1px black;
+    vertical-align: middle;
+
+
+    text-shadow:
+    1px 1px 0 #000;
+}
+
+.banner {
+	border-top: 6px solid rgba(8, 163, 235, 0.849);
+    border-bottom: 6px solid rgba(8, 163, 235, 0.849);
+    border-left: 6px solid rgba(8, 163, 235, 0.849);
+    border-right: 6px solid rgba(8, 163, 235, 0.849);
+	animation: fromLeft;
+	animation-duration: 4s;
+	animation-delay: 2s;
+	opacity: 1;
+    animation-fill-mode: forwards;
+    vertical-align: middle;
+
+}
+
+input {
+    outline: none;
+    align-items: center;
+}
+input[type=search] {
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+	font-family: inherit;
+	font-size: 100%;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+    display: none; 
+    align-content: center;
+}
+
+
+input[type=search] {
+	border: solid 1px #ccc;
+	padding: 9px 24px 9px 32px;
+    width: 55px;
+    align-self: center;
+	
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+input[type=search]:focus {
+	width: 130px;
+	background-color: #fff;
+	border-color: #66CC75;
+	
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
