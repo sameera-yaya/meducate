@@ -30,8 +30,8 @@ data_loc2 = 's3://{}/{}'.format(bucket_name, file_name_2)
 df = pd.read_csv(data_loc1, delimiter='\t')
 df2 = pd.read_csv(data_loc2, delimiter='\t')
 
-df.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","effectiveness","sideEffects"], axis=1,inplace=True)
-df2.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","effectiveness","sideEffects"], axis=1,inplace=True)
+df.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","sideEffects"], axis=1,inplace=True)
+df2.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","sideEffects"], axis=1,inplace=True)
 
 #print(df.isna())
 df = pd.concat([df, df2], ignore_index=True)
@@ -80,12 +80,12 @@ for index in df.index:
 
 #print(m)
 #actual_jaccard = float(len(m[14].intersection(m[22])))/float(len(m[14].union(m[22])))
-print(df.index)
-print(df.at[14, 'urlDrugName'])
-print(df.at[22, 'urlDrugName'])
-print(len(df.at[14, 'urlDrugName']))
-print(len(df.at[22, 'urlDrugName']))
-print(m[14].jaccard(m[22]))
+#print(df.index)
+#print(df.at[14, 'urlDrugName'])
+#print(df.at[22, 'urlDrugName'])
+#print(len(df.at[14, 'urlDrugName']))
+#print(len(df.at[22, 'urlDrugName']))
+#print(m[14].jaccard(m[22]))
 #print(actual_jaccard)
 
 '''
@@ -101,7 +101,7 @@ print(len(lsh))
 '''
 
 sub = '-'
-print(len([s for s in df['urlDrugName'] if sub in s]))
+#print(len([s for s in df['urlDrugName'] if sub in s]))
 '''
 hyphen = [s for s in df['urlDrugName'] if sub in s]
 print(df.query('-' in 'urlDrugName').index)
@@ -126,8 +126,8 @@ for i in range(0, len(df.index)):
              #   print(df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
 
 print(df)
-print(len([s for s in df['urlDrugName'] if sub in s]))
-print([s for s in df['urlDrugName'] if sub in s])
+#print(len([s for s in df['urlDrugName'] if sub in s]))
+#print([s for s in df['urlDrugName'] if sub in s])
 
 '''
 hyphen = df[['urlDrugName']]
