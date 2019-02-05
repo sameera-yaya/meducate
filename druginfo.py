@@ -4,10 +4,27 @@ import pandas as pd
 import numpy as np
 #import re
 from datasketch import MinHash, MinHashLSH, MinHashLSHForest
+import os
+import boto
+
+aws_access_key = os.getenv('AWS_ACCESS_KEY_ID', 'default')
+aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY', 'default')
+
+bucket_name = "drug-data"
+file_name_1 = "drugLibTest_raw.tsv"
+file_name_2 = "drugLibTrain_raw.tsv"
+conn = boto.connect_s3(aws_access_key, aws_secret_access_key)
+
+bucket = conn.get_bucket(bucket_name)
+key_1 = bucket.get_key(file_name_1)
+key_2 = bucket.get_key(file_name_2)
+
+data_1 = key_1.get_contents_as_string()
+data_2 = key_2.get_contents_as_string()
 
 
-df = pd.read_csv("drugLibTest_raw.tsv", delimiter='\t')
-df2 = pd.read_csv("drugLibTrain_raw.tsv", delimiter='\t')
+df = pd.read_csv(data_1, delimiter='\t')
+df2 = pd.read_csv(data_2, delimiter='\t')
 
 df.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","effectiveness","sideEffects"], axis=1,inplace=True)
 df2.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","effectiveness","sideEffects"], axis=1,inplace=True)
