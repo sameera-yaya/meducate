@@ -6,8 +6,8 @@ import numpy as np
 from datasketch import MinHash, MinHashLSH, MinHashLSHForest
 
 
-df = pd.read_csv("C:/Users/samee/Downloads/drugLib_raw/drugLibTest_raw.tsv", delimiter='\t')
-df2 = pd.read_csv("C:/Users/samee/Downloads/drugLib_raw/drugLibTrain_raw.tsv", delimiter='\t')
+df = pd.read_csv("drugLibTest_raw.tsv", delimiter='\t')
+df2 = pd.read_csv("drugLibTrain_raw.tsv", delimiter='\t')
 
 df.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","effectiveness","sideEffects"], axis=1,inplace=True)
 df2.drop(["Unnamed: 0","benefitsReview","sideEffectsReview","commentsReview","effectiveness","sideEffects"], axis=1,inplace=True)
