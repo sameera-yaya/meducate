@@ -6,6 +6,7 @@ import numpy as np
 from datasketch import MinHash, MinHashLSH, MinHashLSHForest
 import os
 import boto3
+import MySQLdb
 
 aws_access_key = os.getenv('AWS_ACCESS_KEY_ID', 'default')
 aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY', 'default')
@@ -145,3 +146,18 @@ for s in df['urlDrugName']:
                 print("yay")
 
 print('done') '''
+
+def mysqlconnect():
+    try:
+        db_conn = MySQLdb.connect('localhost','syayavaram','G5nenw53','drug_info_db')
+    except: 
+        print("Cannot connect to database")
+        return 0
+    print("Connected")
+
+    cursor = db_conn.cursor()
+
+    db_conn.close()
+
+mysqlconnect()
+
