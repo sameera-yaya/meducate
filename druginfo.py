@@ -6,6 +6,8 @@ import numpy as np
 from datasketch import MinHash, MinHashLSH, MinHashLSHForest
 import os
 import boto3
+import MySQLdb
+import sqlalchemy
 
 aws_access_key = os.getenv('AWS_ACCESS_KEY_ID', 'default')
 aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY', 'default')
@@ -125,6 +127,7 @@ for i in range(0, len(df.index)):
             #else:
              #   print(df.at[i, 'urlDrugName'], df.at[j, 'urlDrugName'])
 
+df.columns = ['name', 'rating', 'effectiveness','diagnosis']
 print(df)
 #print(len([s for s in df['urlDrugName'] if sub in s]))
 #print([s for s in df['urlDrugName'] if sub in s])
@@ -145,3 +148,39 @@ for s in df['urlDrugName']:
                 print("yay")
 
 print('done') '''
+
+def mysqlconnect():
+    try:
+        db_conn = MySQLdb.connect('localhost','syayavaram','G6nenw53','drug_info_db')
+	#engine = sqlalchemy.create_engine('mysql+pymysql://syayavaram:@localhost:3306/drug_info_db')
+	
+    except: 
+        print("Cannot connect to database")
+        return 0
+    print("Connected")
+
+    cursor = db_conn.cursor()
+    try:
+	sql = "CREATE TABLE IF NOT EXISTS druginfo(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255), rating INT, effectiveness VARCHAR(255), diagnosis VARCHAR(255))"
+	cursor.execute(sql)
+    except:
+	print("Cannot create table")
+
+    print("Created table")
+
+    try:
+    	df.to_sql(name = 'druginfo', con=db_conn, if_exists='append', flavor='mysql', index=False)
+#    sql = "INSERT INTO druginfo (name, rating, effectiveness, diagnosis) VALUES (%s, %s, %s, %s)"
+ #   val = ("xanax",7,"Moderately Effective","anxiety")
+  #  cursor.execute(sql, val)
+
+    except:
+	print("Cannot insert in table")
+
+    print("Inserted dataframe into table")
+
+    db_conn.commit()
+    db_conn.close()
+
+mysqlconnect()
+
