@@ -4,11 +4,15 @@ from six.moves import configparser
 import MySQLdb
 config = configparser.ConfigParser()
 
-'''config.read('/../../mnt/c/Users/samee/Downloads/Meducate/flask/config.ini')
-dbname = config.get('')'''
+config.read('/home/ubuntu/insight-drug-info/flask/app/config.ini')
+dbname = config.get('auth', 'dbname')
+dbuser = config.get('auth', 'user')
+dbpass = config.get('auth', 'password')
+dbhost = config.get('auth', 'host')
+dbport = config.get('auth', 'port')
 
 try:
-    db_conn = MySQLdb.connect('localhost', 'syayavaram', 'G6nenw53', 'drug_info_db')
+    db_conn = MySQLdb.connect(host=dbhost, user=dbuser, passwd=dbpass, db=dbname)
     cursor = db_conn.cursor()
 except:
     print("Cannot connect to database")
