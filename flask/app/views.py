@@ -23,3 +23,10 @@ print("Connected")
 @app.route('/index')
 def index():
     return render_template("meds.html")
+
+@app.route('/graph')
+def graph():
+    sql_query = '''
+                SELECT * FROM druginfo;
+                '''
+    return render_template("charts.html")
