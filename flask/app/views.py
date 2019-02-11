@@ -1,7 +1,10 @@
 from flask import render_template
 from app import app
+import pandas as pd
 from six.moves import configparser
 import MySQLdb
+from flask import request
+
 config = configparser.ConfigParser()
 
 config.read('/home/ubuntu/insight-drug-info/flask/app/config.ini')
@@ -26,7 +29,19 @@ def index():
 
 @app.route('/graph')
 def graph():
-    sql_query = '''
-                SELECT * FROM druginfo;
-                '''
-    return render_template("charts.html")
+    loc = request.args.get('diagnosis')
+    sql_query = "SELECT name, avg(rating) as rating\
+		FROM druginfo\
+		WHERE diagnosis = '%s'\
+		GROUP BY name\
+		ORDER BY rating desc"\
+		%(loc)
+    print(sql_query)
+    sql_query_results = pd.read_sql_query(sql_query, db_conn)
+    print(sql_query_results)
+    results = []
+    for i in range (0, sql_query_results.shape[0]):
+	results.append(dict(name=sql_query_results.iloc[i]['name'],\
+			rating=sql_query_results.iloc[i]['rating']))
+
+    return render_template("charts.html", results = results)

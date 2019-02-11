@@ -20,26 +20,12 @@
       <table>
           <thead><tr><th>Drug Name</th><th>Rating</th></tr></thead>
           <tbody>
+	    {% for result in results %}
             <tr>
-            <td>drug 1</td>
-            <td>rating 1</td>
+            <td>{{result['name']}}</td>
+            <td>{{result['rating']}}</td>
             </tr>
-            <tr>
-            <td>drug 2</td>
-            <td>rating 2</td>
-            </tr>
-            <tr>
-            <td>drug 3</td>
-            <td>rating 3</td>
-            </tr>
-            <tr>
-            <td>drug 4</td>
-            <td>rating 4</td>
-            </tr>
-            <tr>
-            <td>drug 5</td>
-            <td>rating 5</td>
-            </tr>
+	    {% endfor %}
             </tbody>
       </table>
   </body>
