@@ -4,6 +4,8 @@ import pandas as pd
 from six.moves import configparser
 import MySQLdb
 from flask import request
+import plotly
+import json
 
 config = configparser.ConfigParser()
 
@@ -41,7 +43,42 @@ def graph():
     print(sql_query_results)
     results = []
     for i in range (0, sql_query_results.shape[0]):
-	results.append(dict(name=sql_query_results.iloc[i]['name'],\
+	results.append(dict(name=sql_query_results.iloc[i]['name'],
 			rating=sql_query_results.iloc[i]['rating']))
 
-    return render_template("charts.html", results = results)
+	'''    graph_results = {}
+    
+    for i in range(0, sql_query_results.head(5).shape[0]):
+	graph_results[sql_query_results.iloc[i]['name']] = sql_query_results.iloc[i]['rating']
+    print(graph_results)'''
+
+    names = map(str, list(sql_query_results['name'].values))
+    #names = map(str, list(sql_query_results['name'].values))
+    ratings = map(float, list(sql_query_results['rating'].values))
+    print(names)
+    print(ratings)
+    graph = [
+	dict(
+	    data=[
+		dict(
+		    x=names,
+		    y=ratings,
+		    type='line'
+		)],
+	    layout=dict(
+		title='main graph'
+	    )
+	)
+    ]
+    ids = ['graph-{}'.format(i) for i, _ in enumerate(graph)]
+    graphJSON = json.dumps(graph, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+
+    return render_template("charts.html", results = results,ids=ids, graph_results = graphJSON)
+
+
+
+
+
+

@@ -7,6 +7,7 @@
 
     <!-- Main (main.css) CSS -->
     <link rel="stylesheet" href="/static/chartsview.css">
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script-->
   </head>
   <body>
       <div class= "banner text center">
@@ -15,9 +16,14 @@
       <h2></h2>
       <h4>Top Medications:</h4>
       <div class="graph">
+	{% for id in ids %}
+	<h5>{{id}}</h5>
+	<div id="{{id}}"></div>
+	{% endfor %}
         <h5>Graph goes here.</h5>
+
       </div>
-      <table>
+<div>      <table>
           <thead><tr><th>Drug Name</th><th>Rating</th></tr></thead>
           <tbody>
 	    {% for result in results %}
@@ -27,6 +33,25 @@
             </tr>
 	    {% endfor %}
             </tbody>
-      </table>
+      </table></div>
   </body>
+	<footer>
+	<!-- D3.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!-- Plotly.js -->
+	<!-- <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script> -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+	<script type="text/javascript">
+		var graphs = {{graph_results | safe}};
+		var ids = {{ids | safe}};
+		for(var i in graphs) {
+			Plotly.plot(ids[i], // the ID of the div, created above
+				graphs[i].data,
+				graphs[i].layout || {});
+					}
+			</script>
+</footer>
 </html>
