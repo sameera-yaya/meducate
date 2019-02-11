@@ -63,7 +63,7 @@ def graph():
 		dict(
 		    x=names,
 		    y=ratings,
-		    type='line'
+		    type='bar'
 		)],
 	    layout=dict(
 		title='main graph'
