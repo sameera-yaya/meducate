@@ -46,15 +46,11 @@ def graph():
 	results.append(dict(name=sql_query_results.iloc[i]['name'],
 			rating=sql_query_results.iloc[i]['rating']))
 
-	'''    graph_results = {}
-    
-    for i in range(0, sql_query_results.head(5).shape[0]):
-	graph_results[sql_query_results.iloc[i]['name']] = sql_query_results.iloc[i]['rating']
-    print(graph_results)'''
+    graph_results = sql_query_results.head()
 
-    names = map(str, list(sql_query_results['name'].values))
+    names = map(str, list(graph_results['name'].values))
     #names = map(str, list(sql_query_results['name'].values))
-    ratings = map(float, list(sql_query_results['rating'].values))
+    ratings = map(float, list(graph_results['rating'].values))
     print(names)
     print(ratings)
     graph = [
@@ -65,9 +61,6 @@ def graph():
 		    y=ratings,
 		    type='bar'
 		)],
-	    layout=dict(
-		title='main graph'
-	    )
 	)
     ]
     ids = ['graph-{}'.format(i) for i, _ in enumerate(graph)]

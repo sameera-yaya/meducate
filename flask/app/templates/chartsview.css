@@ -76,3 +76,9 @@ thead th {
 thead th:first-child {
     border-left: none;
 }
+.graph{
+    border-top: 6px solid rgba(8, 163, 235, 0.849);
+    border-bottom: 6px solid rgba(8, 163, 235, 0.849);
+    border-left: 6px solid rgba(8, 163, 235, 0.849);
+    border-right: 6px solid rgba(8, 163, 235, 0.849);
+}
