@@ -33,7 +33,7 @@ def index():
 def graph():
     loc = request.args.get('diagnosis')
     sql_query = "SELECT name, avg(rating) as rating\
-		FROM druginfo\
+		FROM druginfo2\
 		WHERE diagnosis = '%s'\
 		GROUP BY name\
 		ORDER BY rating desc"\

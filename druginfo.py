@@ -112,7 +112,7 @@ print(df.xs('urlDrugName','index'))
 print(df[['urlDrugName']])
 hyphen = df[['urlDrugName']]
 '''
-
+'''
 for i in range(0, len(df.index)):
     for j in range(i, len(df.index)):
         if m[i].jaccard(m[j]) >= 0.25 and df.at[i, 'urlDrugName'] != df.at[j, 'urlDrugName']:
@@ -131,7 +131,7 @@ df.columns = ['name', 'rating', 'effectiveness','diagnosis']
 print(df)
 #print(len([s for s in df['urlDrugName'] if sub in s]))
 #print([s for s in df['urlDrugName'] if sub in s])
-
+'''
 '''
 hyphen = df[['urlDrugName']]
 for s in hyphen.index:
@@ -149,6 +149,8 @@ for s in df['urlDrugName']:
 
 print('done') '''
 
+df.columns = ['name','rating', 'effectiveness','diagnosis']
+
 def mysqlconnect():
     try:
         db_conn = MySQLdb.connect('localhost','syayavaram','G6nenw53','drug_info_db')
@@ -161,7 +163,7 @@ def mysqlconnect():
 
     cursor = db_conn.cursor()
     try:
-	sql = "CREATE TABLE IF NOT EXISTS druginfo(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255), rating INT, effectiveness VARCHAR(255), diagnosis VARCHAR(255))"
+	sql = "CREATE TABLE IF NOT EXISTS druginfo2(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255), rating INT, effectiveness VARCHAR(255), diagnosis VARCHAR(255))"
 	cursor.execute(sql)
     except:
 	print("Cannot create table")
@@ -169,13 +171,14 @@ def mysqlconnect():
     print("Created table")
 
     try:
-    	df.to_sql(name = 'druginfo', con=db_conn, if_exists='append', flavor='mysql', index=False)
+    	df.to_sql(name = 'druginfo2', con=db_conn, if_exists='append', flavor='mysql', index=False)
 #    sql = "INSERT INTO druginfo (name, rating, effectiveness, diagnosis) VALUES (%s, %s, %s, %s)"
  #   val = ("xanax",7,"Moderately Effective","anxiety")
   #  cursor.execute(sql, val)
 
     except:
 	print("Cannot insert in table")
+	return 0
 
     print("Inserted dataframe into table")
 
