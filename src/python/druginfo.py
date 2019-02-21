@@ -20,6 +20,7 @@ def create_df(data_location_1, data_location_2):
 
     df = df.dropna().reset_index()
     df.drop(['index'], axis=1,inplace=True)
+    return df
 
 def create_shingles(text):
     text = text.lower()
@@ -102,6 +103,6 @@ if __name__ == "__main__":
     data_loc1 = 's3://{}/{}'.format(bucket_name, file_name_1)
     data_loc2 = 's3://{}/{}'.format(bucket_name, file_name_2)
 
-    create_df(data_loc1, data_loc2)
+    df = create_df(data_loc1, data_loc2)
     preprocess()
     mysqlconnect()
