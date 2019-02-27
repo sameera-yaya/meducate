@@ -16,4 +16,4 @@ This data exists in an Amazon S3 bucket and a python script accesses this data a
 
 ## User Interface
 Link: [gomeducate.info](gomeducate.info)
-![Image](img/meducate.JPG)
+![Image](img/meducate.gif)
