@@ -15,3 +15,5 @@ The data is a drug review survey conducted by UCI. It reports the drug name, the
 This data exists in an Amazon S3 bucket and a python script accesses this data and preprocesses the data using MinHash and Jaccard Similarity before saving it in a MySQL database. The Flask application displays the data from the MySQL database to the user after they search for their medical condition. 
 
 ## User Interface
+Link: [gomeducate.info](gomeducate.info)
+![Image](img/meducate.JPG)
